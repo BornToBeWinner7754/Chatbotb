@@ -1,0 +1,51 @@
+name: CI Workflow
+
+# This decides when the workflow should run.
+on:
+  # Run on every push to these branches.
+  push:
+    branches: [main, dev, master]
+
+  # Also run when someone opens/updates a Pull Request to these branches.
+  pull_request:
+    branches: [main, dev, master]
+
+jobs:
+  test:
+    # GitHub gives us a fresh Ubuntu machine for this job.
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) Download your repository code into the runner machine.
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2) Install Python in the runner.
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          # Cache pip packages to make future CI runs faster.
+          cache: "pip"
+
+      # 3) Install dependencies listed in requirements.txt.
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # 4) Quick syntax validation for all Python files.
+      #    This fails if any file has syntax errors.
+      - name: Check Python syntax
+        run: python -m compileall -q .
+
+      # 5) Run tests ONLY if a tests folder exists.
+      #    This keeps CI green for now if you haven't added tests yet.
+      - name: Run tests (if present)
+        run: |
+          if [ -d tests ]; then
+            pip install pytest
+            pytest -q
+          else
+            echo "No tests directory found. Skipping tests."
+          fi
