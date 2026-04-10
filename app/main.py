@@ -2,8 +2,8 @@ from fastapi import FastAPI, HTTPException
 from app.schemas import ChatRequest, ChatResponse #pydantic model define the shape of request response data/json
 from app.session_manger import session_manager  #the shared in memeory store we created earlier to manage conversation history
 from app.llm import call_azure_openai   #the async httpx function that calls Azure OpenAI
-from app.agent import run_agent  #the agent logic that decides when to call tools
 import asyncio
+
 # creates the fast api application instance
 app = FastAPI(title="Async Chatbot API")
 @app.post("/chat",response_model=ChatResponse)
