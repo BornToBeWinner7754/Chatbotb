@@ -14,15 +14,19 @@ jobs:
   test:
     # GitHub gives us a fresh Ubuntu machine for this job.
     runs-on: ubuntu-latest
+    env:
+      # Opt in to Node.js 24 runtime for JavaScript-based GitHub Actions.
+      # This avoids Node 20 deprecation warnings.
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
     steps:
       # 1) Download your repository code into the runner machine.
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # 2) Install Python in the runner.
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
           # Cache pip packages to make future CI runs faster.
