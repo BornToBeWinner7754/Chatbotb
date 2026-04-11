@@ -7,7 +7,7 @@ import asyncio
 
 # creates the fast api application instance
 app = FastAPI(title="Async Chatbot API with agent and tools")
-@app.post("/chat",response_model=ChatResponse)
+@app.post("/chat", response_model=ChatResponse)
 # @app.post("/chat") registers this function to handle the POST /chat endpoint. When a client sends a POST request to /chat, this function will be called.
 # response model= Chatresponse tells the fastapi to automatically convert the return value of this function into a ChatResponse object and then serialize it to JSON for the HTTP response.
 async def chat(request:ChatRequest):

@@ -1,5 +1,5 @@
 # streamlit_app.py
-
+# A simple Streamlit frontend to interact with the FastAPI chatbot backend.
 import streamlit as st
 import requests
 import uuid
